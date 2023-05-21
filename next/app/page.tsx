@@ -2,10 +2,7 @@ import Image from "next/image";
 import axios from "axios";
 
 async function getData() {
-  console.log("right before THE FETCH");
-  const res = await axios.get("http://express:8000/sample");
-  // console.log("data fetch above this");
-  console.log("TESTING");
+  const res = await axios.get("http://express:8000/");
   return res.data;
 }
 
