@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - express
+      - next
+
+  express:
+    container_name: express
+    restart: always
+    build: ./express
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./express/:/app/"
+      - "/app/node_modules"
+    environment:
+      PORT: 8000
+    command: npm run start
+
+  next:
+    container_name: next
+    build: ./next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - express
+    volumes:
+      - "./next:/app"
+      - "/app/node_modules"
+    environment:
+      PORT: 3000
+    command: npm run dev
